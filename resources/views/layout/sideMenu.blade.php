@@ -19,7 +19,7 @@
                 <ul class="categories">
                     @foreach($categories as $category)
                     <li>
-                        <a href="{{route('category',$category->id)}}"><i class="fa fa-angle-right"></i> {{$category -> title}}</a>
+                        <a href="{{route('category',$category->slug)}}"><i class="fa fa-angle-right"></i> {{$category -> title}}</a>
                         <span class="badge pull-right">{{$category -> post -> count()}}</span>
                     </li>
                     @endforeach
