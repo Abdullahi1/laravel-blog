@@ -28,7 +28,8 @@
                                 <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
                             </ul>
                         </div>
-                        {{$post -> body}}
+                        {{--the !! means that it wont escape the html tag as a string--}}
+                        {!! $post -> body_content !!}
                         {{--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium molestiae, eveniet dignissimos totam recusandae nesciunt architecto consequatur sit ratione, labore asperiores ipsa molestias voluptatibus! Expedita eveniet est officia impedit recusandae.</p>--}}
                         {{--<p>Accusamus a quod laboriosam, iusto ipsum, optio ullam ratione aspernatur molestias minima quia architecto id earum soluta ipsa veniam deserunt? Assumenda quasi non similique hic, consequuntur fugit corporis impedit? Beatae?</p>--}}
                         {{--<p>Veniam officiis a, odio, natus facilis recusandae voluptate et odit quasi assumenda molestiae alias culpa earum ea eius eum rerum commodi. Laudantium inventore reiciendis repellendus nisi natus voluptas, similique repellat.</p>--}}

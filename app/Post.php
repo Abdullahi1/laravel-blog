@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -34,6 +35,10 @@ class Post extends Model
     {
         //$post->date
         return is_null($this->published_at) ? '' : $this->published_at->diffForHumans();
+    }
+
+    public function getBodyContentAttribute($value){
+      return  Markdown::convertToHtml(e($this->body));
     }
 
     //Creating A scope for the controller

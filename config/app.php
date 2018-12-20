@@ -122,6 +122,12 @@ return [
     'providers' => [
 
         /*
+         * External Laravel FrameWork Service Providers...
+         */
+
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+
+        /*
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
@@ -174,6 +180,13 @@ return [
     */
 
     'aliases' => [
+
+        /*
+        * External Laravel FrameWork aliases...
+        */
+
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        //
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
