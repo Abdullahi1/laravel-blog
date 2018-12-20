@@ -31,6 +31,11 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    //A Post can belong to a specific Categories
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
     public function getDateAttribute($value)
     {
         //$post->date

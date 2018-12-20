@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Category;
+use function foo\func;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Post;
@@ -28,8 +30,16 @@ class BlogController extends Controller
             ->latest()
             ->published()
             ->paginate(3);
-        //return view('blog.index',compact('posts'));
-        return view('blog.index')->with('posts',$posts);
+
+        $categories  = Category::with(['post' => function($query){
+            $query->published();
+        }])
+            ->orderBy('title','asc')
+            ->get();
+
+
+        return view('blog.index',compact('posts','categories'));
+//        return view('blog.index')->with(array('posts','categories'),array($posts, $categories));
 
     }
 
@@ -44,5 +54,25 @@ class BlogController extends Controller
 //
     return view('blog.show',compact('post'));
 //     //return view('blog.show')->with('post',$post);
+    }
+
+    public function category($id){
+
+
+
+        $posts = Post::with('author')
+            ->latest()
+            ->published()
+            ->where('category_id',$id)
+            ->paginate(3);
+
+        $categories  = Category::with(['post' => function($query){
+            $query->published();
+        }])
+            ->orderBy('title','asc')
+            ->get();
+
+
+        return view('blog.index',compact('posts','categories'));
     }
 }
