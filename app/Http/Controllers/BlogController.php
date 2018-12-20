@@ -11,6 +11,13 @@ class BlogController extends Controller
 {
     //
 
+//    protected $blog;
+//
+//    public function __construct(Post $post)
+//    {
+//        $this->blog = $post;
+//    }
+
     public function index(){
 
         //This gets all post and order it by latest created
@@ -26,9 +33,16 @@ class BlogController extends Controller
 
     }
 
-    public function show($id){
-        $post = Post::findOrFail($id);
 
-     return view('blog.show')->with('post',$post);
+    //To use the model name as a argument the route name{i.e in web.php==> show ==> /blog/{post}}
+    // must be the same as the function argument( show(Post $post) )
+    public function show(Post $post){
+//       $post = Post::published()
+//        ->findOrFail($blog);
+
+//        die($post);
+//
+    return view('blog.show',compact('post'));
+//     //return view('blog.show')->with('post',$post);
     }
 }

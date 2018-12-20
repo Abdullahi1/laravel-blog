@@ -17,7 +17,7 @@ Route::get('/',[
     //return view('blog.index');
 ]);
 
-Route::get('/blog/{post_id}', [
+Route::get('/blog/{post}', [
     'uses' => 'BlogController@show',
     'as' => 'blog.show'
 ]);
