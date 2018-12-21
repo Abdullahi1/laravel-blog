@@ -35,6 +35,15 @@ class BlogController extends Controller
     // must be the same as the function argument( show(Post $post) )
     public function show(Post $post){
 
+        //Update Post to increment the post on each time a unique user open a post
+        //1. Option One
+//        $viewCount = $post -> view_count + 1;
+//        $post -> update('view_count',$viewCount);
+
+        //Option Two
+        $post->increment('view_count',1);
+
+
     return view('blog.show',compact('post'));
     }
 

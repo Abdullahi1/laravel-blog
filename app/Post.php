@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     //
+//This method is needed to be included if there is update in the post table using the "Update" Method
+//
+//    protected $fillable = ['view_count'];
 
     protected $dates = ['published_at'];
 

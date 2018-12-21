@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Category;
 use App\Post;
+use App\View\Composers\NavigationComposer;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -16,22 +17,8 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        view()->composer('layout.sideMenu',function ($view){
+        view()->composer('layout.sideMenu',NavigationComposer::class);
 
-            $categories  = Category::with(['post' => function($query){
-                $query->published();
-            }])
-                ->orderBy('title','asc')
-                ->get();
-            return $view->with('categories',$categories);
-
-        });
-
-        view() -> composer('layout.sideMenu',function ($view){
-            $popularPosts = Post::published()->popular()->take(3)->get();
-
-            return $view->with('popularPosts',$popularPosts);
-        });
     }
 
     /**
