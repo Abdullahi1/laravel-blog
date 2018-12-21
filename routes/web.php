@@ -35,3 +35,6 @@ Route::get('/author/{author}',[
 
 
 //Route::resource('blog','BlogController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
