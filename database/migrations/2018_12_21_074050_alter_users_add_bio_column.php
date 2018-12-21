@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterUsersAddSlugColumn extends Migration
+class AlterUsersAddBioColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,7 @@ class AlterUsersAddSlugColumn extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-
-            $table->string('slug');
+            $table->text('bio');
         });
     }
 
@@ -29,8 +28,7 @@ class AlterUsersAddSlugColumn extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-
-            $table->dropColumn('slug');
+            $table->dropColumn('bio');
         });
     }
 }

@@ -55,12 +55,12 @@
                                 <i class="fa fa-clone"></i>
 
                                 <?php
-                                $postCount =  $post->author->post->count();
+                                $postCount =  $post->author->post()->published()->count();
                                 ?>
                                 {{ $postCount }} {{ str_plural('post',$postCount) }}
                             </a>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad aut sunt cum, mollitia excepturi neque sint magnam minus aliquam, voluptatem, labore quis praesentium eum quae dolorum temporibus consequuntur! Non.</p>
+                        <p>{!! $post -> author -> author_biography !!} </p>
                     </div>
                 </div>
             </article>
