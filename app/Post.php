@@ -54,4 +54,8 @@ class Post extends Model
     public function scopePublished($query){
         return $query->where('published_at','<=',Carbon::now());
     }
+
+    public function scopePopular($query){
+        return $query->orderBy('view_count','asc');
+    }
 }

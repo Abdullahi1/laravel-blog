@@ -34,6 +34,7 @@ class BlogController extends Controller
     //To use the model name as a argument the route name{i.e in web.php==> show ==> /blog/{post}}
     // must be the same as the function argument( show(Post $post) )
     public function show(Post $post){
+
     return view('blog.show',compact('post'));
     }
 
