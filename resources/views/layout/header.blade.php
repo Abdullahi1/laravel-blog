@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     @if(isset($categoryName))
     <title>{{$categoryName}} | My Blog</title>
-        @else
+    @elseif(isset($authorName))
+        <title>  {{$authorName}} | My Awesome Blog</title>
+
+    @else
       <title>  My Blog | My Awesome Blog</title>
     @endif
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
@@ -62,6 +65,7 @@
         </div>
     </div>
 </footer>
-<script src="../../js/bootstrap.min.js'"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.js"></script>
 </body>
 </html>

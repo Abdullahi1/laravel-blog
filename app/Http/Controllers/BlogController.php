@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Category;
+use App\User;
 use function foo\func;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -11,14 +12,6 @@ use App\Post;
 
 class BlogController extends Controller
 {
-    //
-
-//    protected $blog;
-//
-//    public function __construct(Post $post)
-//    {
-//        $this->blog = $post;
-//    }
 
     public function index(){
 
@@ -31,12 +24,6 @@ class BlogController extends Controller
             ->published()
             ->paginate(3);
 
-//        $categories  = Category::with(['post' => function($query){
-//            $query->published();
-//        }])
-//            ->orderBy('title','asc')
-//            ->get();
-
 
         return view('blog.index',compact('posts'));
 //        return view('blog.index')->with(array('posts','categories'),array($posts, $categories));
@@ -47,19 +34,7 @@ class BlogController extends Controller
     //To use the model name as a argument the route name{i.e in web.php==> show ==> /blog/{post}}
     // must be the same as the function argument( show(Post $post) )
     public function show(Post $post){
-//       $post = Post::published()
-//        ->findOrFail($blog);
-
-//        die($post);
-
-//        $categories  = Category::with(['post' => function($query){
-//            $query->published();
-//        }])
-//            ->orderBy('title','asc')
-//            ->get();
-//
     return view('blog.show',compact('post'));
-//     //return view('blog.show')->with('post',$post);
     }
 
     public function category(Category $category){
@@ -74,14 +49,22 @@ class BlogController extends Controller
             ->paginate(3);
 
 
-
-//        $categories  = Category::with(['post' => function($query){
-//            $query->published();
-//        }])
-//            ->orderBy('title','asc')
-//            ->get();
-
-
         return view('blog.index',compact('posts','categoryName'));
     }
+
+    public function author(User $author){
+       // die($author->name);
+
+        $authorName = $author -> name;
+
+
+        $posts = $author
+            ->post()
+            ->with('category')
+            ->latest()
+            ->published()
+            ->paginate(3);
+
+
+        return view('blog.index',compact('posts','authorName'));    }
 }
