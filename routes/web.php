@@ -19,7 +19,7 @@ Route::get('/',[
 
 Route::get('/blog/{post}', [
     'uses' => 'BlogController@show',
-    'as' => 'blog.show'
+    'as' => 'blog.check'
 ]);
 
 Route::get('/category/{category}', [

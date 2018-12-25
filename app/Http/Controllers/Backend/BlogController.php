@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\BackendController;
+use App\Http\Requests;
 
 class BlogController extends BackendController
 {
@@ -13,6 +14,15 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $uploadPath;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->uploadPath = public_path('img');
+    }
+
     public function index()
     {
         //
@@ -25,10 +35,12 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Post $post)
     {
         //
-        dd('hello');
+        //dd('hello');
+
+        return view('backend.blog.create',compact('post'));
     }
 
     /**
@@ -37,9 +49,30 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\PostRequest $request)
     {
         //
+
+        $data = $this->handleRequest($request);
+        $request->user()->post()->create($data);
+
+        return redirect('backend/blog')->with('message','Post Created Successfully');
+    }
+
+
+    public function handleRequest(Request $request){
+        $data = $request->all();
+
+        if ($request->hasFile('image')){
+            $image = $request ->file('image'); //File Method return a file object
+            $fileName = $image->getClientOriginalName(); //File Name to be saved to the post table
+            $destination = $this->uploadPath;
+            $image->move($destination,$fileName);
+
+            $data['image'] = $fileName;
+        }
+
+        return $data;
     }
 
     /**
@@ -56,14 +89,15 @@ class BlogController extends BackendController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Post $blog
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Post $blog)
     {
         //
-        $post = Post::with('category', 'author')->where('id','=',$id)->get();
-        dd($post);
+        //$post = Post::with('category', 'author')->where('id','=',$id)->get();
+        dd($blog->id);
 
     }
 

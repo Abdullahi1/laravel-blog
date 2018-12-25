@@ -28,7 +28,7 @@ class PostsTableSeeder extends Seeder
         {
             $image = "Post_Image_" . rand(1, 5) . ".jpg";
 //            $date = date("Y-m-d H:i:s", strtotime("2018-08-18 08:00:00 +{$i} days"));
-             $date ->addDays($i);
+             $date ->addDays(1);
              $publishedDate =  clone ($date);
              $createdDate = clone ($date);
 
@@ -41,7 +41,7 @@ class PostsTableSeeder extends Seeder
                 'image' => rand(0, 1) == 1 ? $image : NULL,
                 'created_at' => $createdDate,
                 'updated_at' => $createdDate,
-                'published_at' => $i <= 10 ? $publishedDate :(rand(0,1) == 0 ? NULL : $publishedDate->addDays( 3)),
+                'published_at' => $i < 5 ? $publishedDate : ( rand(0, 1) == 0 ? NULL : $publishedDate->addDays(4) ),
                 'category_id' => rand(1,6),
                 'view_count' => rand(1,10) * 10,
             ];

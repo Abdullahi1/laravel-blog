@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title','My Blog | Dashboard')
+@section('title','My Blog | Blog Index')
 
 @section('content')
 
@@ -9,12 +9,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Dashboard
-                <small>Control panel</small>
+                Blog
+                <small>Display All Blog Post</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
+                <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> DashBoard</a></li>
+                <li><a href="{{ route('blog.index') }}">Blog</a></li>
+                <li class="active">All Posts</li>
             </ol>
         </section>
 
@@ -25,7 +26,7 @@
                     <div class="box">
                         <div class="box-header">
                             <div class="pull-left">
-                                <a id="add-button" title="Add New" class="btn btn-success" href="form.html"><i class="fa fa-plus-circle"></i> Add New</a>
+                                <a id="add-button" title="Add New" class="btn btn-success" href="{{ route('blog.create') }}"><i class="fa fa-plus-circle"></i> Add New</a>
                             </div>
                             <div class="pull-right">
                                 <form accept-charset="utf-8" method="post" class="form-inline" id="form-filter" action="#">
@@ -41,6 +42,17 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
+                            @if(session('message'))
+                                <div class="alert alert-info text-align">
+                                    <strong>{{ session('message') }}</strong>
+                                </div>
+                            @endif
+
+                            @if(! $posts -> count())
+                            <div class="alert alert-danger text-align">
+                                <strong>No Post Available</strong>
+                            </div>
+                            @else
                             <table class="table table-bordered table-condesed">
                                 <thead>
                                 <tr>
@@ -71,15 +83,20 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                                @endif
                         </div>
                         <!-- /.box-body -->
-                        <div class="box-footer clearfix">
-                            <ul class="pagination pagination-sm no-margin pull-left">
+                        <div class="box-footer clearfix ">
+                            <div class="pull-left">
+                            <ul class="pagination pagination-sm no-margin ">
                                 {{ $posts -> render() }}
                             </ul>
-                            <ul class="pull-right">
-                                <small>{{ $posts -> count() }} Items</small>
-                            </ul>
+                            </div>
+
+
+                            <div class="pull-right">
+                                <small>{{ $posts -> count() }} {{str_plural('Post',$posts -> count())}}</small>
+                            </div>
                         </div>
                     </div>
                     <!-- /.box -->
@@ -88,7 +105,17 @@
             <!-- ./row -->
         </section>
         <!-- /.content -->
-
-
     </div>
+
+    {{--<script type="text/javascript">--}}
+        {{--document.addEventListener('DOMContentLoaded',function (e) {--}}
+            {{--if (e.target.classList.contains('alert-info')){--}}
+                {{--console.log('Hello Nigeria')--}}
+                {{--setTimeout(function () {--}}
+                    {{--document.querySelector('.alert-info').remove()--}}
+                {{--},3000);--}}
+
+        {{--}--}}
+        {{--});--}}
+    {{--</script>--}}
 @endsection

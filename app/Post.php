@@ -13,7 +13,13 @@ class Post extends Model
 //
 //    protected $fillable = ['view_count'];
 
+        protected $fillable = ['title','slug','excerpt','body','category_id','published_at','image'];
+
     protected $dates = ['published_at'];
+
+    public function setPublishedAtAttribute($value){
+        $this->attributes['published_at'] = $value ?: NULL;
+    }
 
     public function getImageUrlAttribute($value){
         //$post->image_url
@@ -58,8 +64,10 @@ class Post extends Model
             $format = $format ." H:i:s";
         }
 
+
         return $this->created_at->format($format);
     }
+
 
 
     public function publicationLabel(){

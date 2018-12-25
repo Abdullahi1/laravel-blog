@@ -30,7 +30,7 @@
                 @if($post->image_url)
                 <div class="post-item-image">
                     {{--<a href="{{route('blog.show',$post->slug)}}">--}}
-                    <a href="{{route('blog.show',$post->slug)}}">
+                    <a href="{{route('blog.check',$post->slug)}}">
                         <img src="{{$post->image_url}}" alt="">
                     </a>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="padding-10">
                         <h2>
                             {{--<a href="{{route('blog.show',$post->slug)}}">--}}
-                            <a href="{{route('blog.show',$post->slug)}}">
+                            <a href="{{route('blog.check',$post->slug)}}">
 
                             {{$post->title}}
                             </a>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="pull-right">
                             {{--<a href="{{route('blog.show',$post->slug)}}">--}}
-                            <a href="{{route('blog.show',$post->slug)}}">
+                            <a href="{{route('blog.check',$post->slug)}}">
 
                             Continue Reading &raquo;
                             </a>

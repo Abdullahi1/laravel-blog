@@ -12,23 +12,23 @@
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <div class="form-group{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback">
+                <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
                     <input id="email" type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
                     @if ($errors->has('email'))
-                        <span class="invalid-feedback" role="alert">
+                        <span class="help-block invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                     @endif
 
                 </div>
-                <div class="form-group{{ $errors->has('password') ? ' is-invalid' : '' }} has-feedback">
+                <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
                     <input id="password" type="password" class="form-control" placeholder="Password" name="password" required>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                     @if ($errors->has('password'))
-                        <span class="invalid-feedback" role="alert">
+                        <span class="help-block help-block invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                     @endif
