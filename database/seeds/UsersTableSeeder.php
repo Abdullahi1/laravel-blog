@@ -32,9 +32,9 @@ class UsersTableSeeder extends Seeder
             ],
 
             [
-                'name' => "Jane Doe",
-                'email'=>"janedoe@test.com",
-                'slug' => "jane-doe",
+                'name' => "Jane Doeing",
+                'email'=>"janedoeing@test.com",
+                'slug' => "jane-doeing",
                 'bio' => $faker->text(rand(250, 300)),
                 'password' => bcrypt('secret')
             ],
@@ -46,6 +46,13 @@ class UsersTableSeeder extends Seeder
                 'bio' => $faker->text(rand(250, 300)),
                 'password' => bcrypt('secret')
             ],
+            [
+                'name' => "Aishat Bello",
+                'email'=>"aishat@gmail.com",
+                'slug' => "aishat-bello",
+                'bio' => $faker->text(rand(250, 300)),
+                'password' => bcrypt('secret')
+            ]
         ]);
     }
 }

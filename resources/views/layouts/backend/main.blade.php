@@ -27,7 +27,14 @@
 <link rel="stylesheet" href="{{  asset('backend-files/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
 <!-- bootstrap wysihtml5 - text editor -->
 <link rel="stylesheet" href="{{  asset('backend-files/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+    <!--Simple mde source files-->
+<link rel="stylesheet" href="{{  asset('backend-files/plugins/simplemde/simplemde.min.css') }}">
 
+    <link href="{{   asset('backend-files/custom-files/bootstrap-datetimepicker/datetimepicker.min.css') }}">
+
+    <link href="{{   asset('backend-files/custom-files/jansy-bootstrap/css/jasny-bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('backend-files/custom-files/custom/custom.css') }}">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -84,6 +91,7 @@
 <!-- daterangepicker -->
 <script src="{{  asset('backend-files/bower_components/moment/min/moment.min.js')}}"></script>
 <script src="{{  asset('backend-files/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+
 <!-- datepicker -->
 <script src="{{  asset('backend-files/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 <!-- Bootstrap WYSIHTML5 -->
@@ -99,3 +107,12 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{  asset('backend-files/dist/js/demo.js')}}"></script>
 
+<script  src="{{  asset('backend-files/plugins/simplemde/simplemde.min.js') }}"></script>
+
+<script src="{{   asset('backend-files/custom-files/bootstrap-datetimepicker/datetimepicker.min.js') }}"></script>
+
+<script src="{{   asset('backend-files/custom-files/jansy-bootstrapjs/jasny-bootstrap.min.js') }}"></script>
+
+@yield('script')
+</body>
+</html>

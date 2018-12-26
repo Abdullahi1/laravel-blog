@@ -6,6 +6,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends BackendController
 {
@@ -26,7 +27,8 @@ class BlogController extends BackendController
     public function index()
     {
         //
-        $posts = Post::with('category', 'author')->latest()->paginate(8);
+//        $posts = Post::with('author', 'category')->latest()->paginate(10);
+        $posts = Post::with('author', 'category')->latest()->where('author_id',Auth::id())->paginate(10);
         return view('backend.blog.index',compact('posts'));
     }
 
