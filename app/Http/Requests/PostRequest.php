@@ -23,7 +23,8 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+
+        $rules =  [
             //
 
             'title' => 'required',
@@ -35,5 +36,15 @@ class PostRequest extends FormRequest
             'image' => 'mimes:jpg,jpeg,png,bmp',
 
         ];
+
+        switch($this->method()){
+            case 'PUT':
+            case 'PATCH':
+                // the 'blog' parameter represent the value of the GET Method of the edit route {mostly ID}
+                $rules['slug'] = 'required|unique:posts,slug,' .$this->route('blog');
+                return $rules;
+        }
+
+        return $rules;
     }
 }

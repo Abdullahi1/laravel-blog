@@ -95,11 +95,11 @@ class BlogController extends BackendController
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit(Post $blog)
+    //Post $blog
+    public function edit($id)
     {
-        //
-        //$post = Post::with('category', 'author')->where('id','=',$id)->get();
-        dd($blog->id);
+        $post = Post::findOrFail($id);
+        return view('backend.blog.edit',compact('post'));
 
     }
 
@@ -110,9 +110,15 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\PostRequest $request, $id)
     {
         //
+        $post = Post::findOrFail($id);
+        $data = $this->handleRequest($request);
+        $post->update($data);
+
+        return redirect('backend/blog')->with('message','Post Updated Successfully');
+
     }
 
     /**
