@@ -42,11 +42,13 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            @if(session('message'))
-                                <div class="alert alert-info text-align">
-                                    <strong>{{ session('message') }}</strong>
-                                </div>
-                            @endif
+                            {{--@if(session('message'))--}}
+                                {{--<div class="alert alert-info text-align">--}}
+                                    {{--<strong>{{ session('message') }}</strong>--}}
+                                {{--</div>--}}
+                            {{--@endif--}}
+
+                            @include('backend.blog.message')
 
                             @if(! $posts -> count())
                             <div class="alert alert-danger text-align">
@@ -67,12 +69,14 @@
                                 @foreach($posts as $post)
                                 <tr>
                                     <td width="70">
+                                        {!! Form::open(['method' => 'DELETE','route' => ['blog.destroy', $post->id]]) !!}
                                         <a title="Edit" class="btn btn-xs btn-default edit-row" href="{{ route('blog.edit', $post->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a title="Delete" class="btn btn-xs btn-danger delete-row" href="{{ route('blog.destroy', $post->id) }}">
+                                        <button type="submit" title="Delete" class="btn btn-xs btn-danger delete-row">
                                             <i class="fa fa-times"></i>
-                                        </a>
+                                        </button>
+                                        {!! Form::close() !!}
                                     </td>
                                     <td>{{$post->title}}</td>
                                     <td>{{$post->author->name}}</td>

@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
@@ -12,6 +13,8 @@ class Post extends Model
 //This method is needed to be included if there is update in the post table using the "Update" Method
 //
 //    protected $fillable = ['view_count'];
+
+use SoftDeletes;
 
         protected $fillable = ['title','slug','excerpt','body','category_id','published_at','image'];
 

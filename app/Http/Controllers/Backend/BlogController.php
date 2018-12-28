@@ -130,5 +130,16 @@ class BlogController extends BackendController
     public function destroy($id)
     {
         //
+        Post::findOrFail($id)->delete();
+
+        return redirect('backend/blog')->with('trash-message',['Post moved to trash',$id]);
+    }
+
+    public function restore($id){
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect('backend/blog')->with('message','Post Restored From the trash Successfully');
+
     }
 }
