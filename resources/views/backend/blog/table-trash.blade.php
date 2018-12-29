@@ -19,8 +19,8 @@
                 {!! Form::close() !!}
 
                 {!! Form::open(['style' =>'display:inline-block','method' => 'DELETE','route' => ['blog.force-destroy', $post->id]]) !!}
-                <button type="submit" title="Delete Permanent" class="btn btn-xs btn-danger delete-row">
-                    <i class="fa fa-trash"></i>
+                <button type="submit" title="Delete Permanently" class="btn btn-xs btn-danger delete-row">
+                    <i class="fa fa-times"></i>
                 </button>
                 {!! Form::close() !!}
             </td>

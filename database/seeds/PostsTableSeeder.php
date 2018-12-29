@@ -24,7 +24,7 @@ class PostsTableSeeder extends Seeder
         $date = Carbon::create(2018,12,1,6);
 
 
-        for ($i = 1; $i <= 10; $i++)
+        for ($i = 1; $i <= 100; $i++)
         {
             $image = "Post_Image_" . rand(1, 5) . ".jpg";
 //            $date = date("Y-m-d H:i:s", strtotime("2018-08-18 08:00:00 +{$i} days"));

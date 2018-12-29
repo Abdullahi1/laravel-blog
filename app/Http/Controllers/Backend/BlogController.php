@@ -37,7 +37,35 @@ class BlogController extends BackendController
             $postCount = Post::count();
             $onlyTrashed = TRUE;
 
-        }else{
+        }elseif($status == 'published'){
+            //Calling the published Scope
+            $posts = Post::published()
+                ->with('author', 'category')
+                ->latest()
+                ->where('author_id',Auth::id())
+                ->paginate(10);
+            $postCount = Post::count();
+            $onlyTrashed = FALSE;
+
+        }elseif($status == 'scheduled'){
+            $posts = Post::scheduled()
+                ->with('author', 'category')
+                ->latest()
+                ->where('author_id',Auth::id())
+                ->paginate(10);
+            $postCount = Post::count();
+            $onlyTrashed = FALSE;
+
+        }elseif($status == 'draft'){
+            $posts = Post::draft()
+                ->with('author', 'category')
+                ->latest()
+                ->where('author_id',Auth::id())
+                ->paginate(10);
+            $postCount = Post::count();
+            $onlyTrashed = FALSE;
+
+        }else {
             $posts = Post::with('author', 'category')
                 ->latest()->where('author_id',Auth::id())
                 ->paginate(10);
@@ -47,9 +75,23 @@ class BlogController extends BackendController
 
 //        $posts = Post::with('author', 'category')->latest()->paginate(10);
 
+        $statusList = $this->statusListCount();
 
-        return view('backend.blog.index',compact('posts','postCount','onlyTrashed'));
+        return view('backend.blog.index',compact('posts','postCount','onlyTrashed','statusList'));
     }
+
+    //Returns the number of post for each sections
+    protected function statusListCount()
+    {
+        return [
+          'all' => Post::where('author_id',Auth::id())->count(),
+            'published' => Post::where('author_id',Auth::id())->published()->count(),
+            'scheduled' => Post::where('author_id',Auth::id())->scheduled()->count(),
+            'draft' => Post::where('author_id',Auth::id())->draft()->count(),
+            'trash' => Post::where('author_id',Auth::id())->onlyTrashed()->count(),
+        ];
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -133,8 +175,12 @@ class BlogController extends BackendController
     {
         //
         $post = Post::findOrFail($id);
+        $oldImage = $post->image;
         $data = $this->handleRequest($request);
         $post->update($data);
+        if ($oldImage != $post->image){
+            $this->removeImage($oldImage);
+        }
 
         return redirect('backend/blog')->with('message','Post Updated Successfully');
 
@@ -151,12 +197,17 @@ class BlogController extends BackendController
         //
         Post::findOrFail($id)->delete();
 
-        return redirect('backend/blog')->with('trash-message',['Post moved to trash',$id]);
+        //return redirect('backend/blog')->with('trash-message',['Post moved to trash',$id]);
+
+        return redirect()->back()->with('trash-message',['Post moved to trash',$id]);
     }
 
     protected function forceDestroy($id)
     {
-        Post::withTrashed()->findOrFail($id)->forceDelete();
+        $post = Post::withTrashed()->findOrFail($id);
+        $postImage = $post->image;
+        $post->forceDelete();
+        $this->removeImage($postImage);
         return redirect('backend/blog?status=trash')->with('message','Post Deleted Successfully');
     }
 
@@ -164,7 +215,18 @@ class BlogController extends BackendController
         $post = Post::withTrashed()->findOrFail($id);
         $post->restore();
 
-        return redirect('backend/blog')->with('message','Post Restored From the trash Successfully');
+        //return redirect('backend/blog')->with('message','Post Restored From the trash Successfully');
 
+        return redirect()->back()->with('message','Post Restored From the trash Successfully');
+    }
+
+    public function removeImage($image){
+        if (empty($image)){
+            $imagePath = $this->uploadPath. '/'. $image;
+
+            if (file_exists($imagePath)){
+                unlink($imagePath);
+            }
+        }
     }
 }

@@ -30,8 +30,19 @@
                                 <a id="add-button" title="Add New" class="btn btn-success" href="{{ route('blog.create') }}"><i class="fa fa-plus-circle"></i> Add New</a>
                             </div>
                                 <div class="pull-right">
-                                    <a href="?status=all">All</a> |
-                                    <a href="?status=trash">Trash</a>
+                                    <?php $links = [] ?>
+                                    @foreach($statusList as $key => $value)
+                                        @if($value)
+                                            <?php $selected = Request::get('status') === $key ? 'selected-status' : '' ?>
+                                            <?php $links [] = "<a class=\"{$selected}\" href=\"?status={$key}\">" . ucwords($key) ."({$value})</a>" ?>
+                                            @endif
+                                        @endforeach
+                                        {!! implode(' | ' , $links) !!}
+                                    {{--<a href="?status=all">All</a> |--}}
+                                    {{--<a href="?status=published">Published</a> |--}}
+                                    {{--<a href="?status=scheduled">Scheduled</a> |--}}
+                                    {{--<a href="?status=draft">Draft</a> |--}}
+                                    {{--<a href="?status=trash">Trash</a>--}}
                                     <form accept-charset="utf-8" method="post" class="form-inline" id="form-filter" action="#">
                                     <div class="input-group">
                                         <input type="hidden" name="search">
@@ -70,7 +81,7 @@
                         <div class="box-footer clearfix ">
                             <div class="pull-left">
                             <ul class="pagination pagination-sm no-margin ">
-                                {{ $posts -> render() }}
+                                {{ $posts ->appends( Request::query())-> render() }}
                             </ul>
                             </div>
 

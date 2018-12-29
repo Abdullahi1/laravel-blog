@@ -16,8 +16,8 @@
                 <a title="Edit" class="btn btn-xs btn-default edit-row" href="{{ route('blog.edit', $post->id) }}">
                     <i class="fa fa-edit"></i>
                 </a>
-                <button type="submit" title="Delete" class="btn btn-xs btn-danger delete-row">
-                    <i class="fa fa-times"></i>
+                <button type="submit" title="Delete to Trash" class="btn btn-xs btn-danger delete-row">
+                    <i class="fa fa-trash"></i>
                 </button>
                 {!! Form::close() !!}
             </td>
