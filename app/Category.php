@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    protected $fillable = ['title','slug'];
+
     //
     //A category can have more than one post
     public function post(){

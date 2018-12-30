@@ -49,7 +49,7 @@
                 </ul>
             </li>
 
-            <li><a href="#"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+            <li><a href="{{ route('categories.index') }}"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
         </ul>
     </section>
     <!-- /.sidebar -->

@@ -41,6 +41,9 @@ Route::get('/home', 'Backend\HomeController@index')->name('home');
 
 Route::resource('/backend/blog','Backend\BlogController');
 
+Route::resource('/backend/categories','Backend\CategoriesController');
+
+
 Route::put('/backend/blog/{blog}/restore',[
     'uses' => 'Backend\BlogController@restore',
     'as' => 'blog.restore',

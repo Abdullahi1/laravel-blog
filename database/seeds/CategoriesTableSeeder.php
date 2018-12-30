@@ -16,7 +16,10 @@ class CategoriesTableSeeder extends Seeder
         DB::table('categories')->truncate();
 
         DB::table('categories')->insert([
-           [
+            [
+                'title' => 'Uncategorized',
+                'slug' => 'uncategorized'
+            ],[
                'title' => 'Web Design',
                'slug' => 'web-design'
            ],[

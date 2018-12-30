@@ -159,7 +159,7 @@ class BlogController extends BackendController
     //Post $blog
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where('author_id',Auth::id())->findOrFail($id);
         return view('backend.blog.edit',compact('post'));
 
     }
