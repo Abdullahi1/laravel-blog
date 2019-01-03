@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title','My Blog | Add New Category')
+@section('title','My Blog | Add New user')
 
 @section('content')
 
@@ -10,11 +10,11 @@
         <section class="content-header">
             <h1>
                 Blog
-                <small>Add Category</small>
+                <small>Add New user</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> DashBoard</a></li>
-                <li><a href="{{ route('blog.index') }}">Categories</a></li>
+                <li><a href="{{ route('users.index') }}">Users</a></li>
                 <li class="active">Add New</li>
             </ol>
         </section>
@@ -23,14 +23,14 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                {!! Form::model($category, [
+                {!! Form::model($user, [
                     'method' => 'POST',
-                    'route'  => 'categories.store',
+                    'route'  => 'users.store',
                     'files'  => TRUE,
-                    'id' => 'category-form'
+                    'id' => 'user-form'
                 ]) !!}
 
-                @include('backend.categories.form')
+                @include('backend.users.form')
 
                 {!! Form::close() !!}
             </div>
@@ -44,4 +44,4 @@
     </div>
 @endsection
 
-@include('backend.categories.script')
+@include('backend.users.script')

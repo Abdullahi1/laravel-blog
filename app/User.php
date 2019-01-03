@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','slug'
     ];
 
     /**
@@ -41,7 +41,14 @@ class User extends Authenticatable
         return 'slug';
     }
 
+    //Defining an accessor attribute
     public function getAuthorBiographyAttribute($value){
         return Markdown::convertToHtml(e($this->bio));
+    }
+
+    public function setPasswordAttribute($value){
+        if (!empty($value)){
+            $this->attributes['password'] = bcrypt($value);
+        }
     }
 }

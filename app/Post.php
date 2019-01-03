@@ -20,10 +20,12 @@ use SoftDeletes;
 
     protected $dates = ['published_at'];
 
+    //Defining the published_at mutator to store a value to the db
     public function setPublishedAtAttribute($value){
         $this->attributes['published_at'] = $value ?: NULL;
     }
 
+    //Defining the image_url attribute
     public function getImageUrlAttribute($value){
         //$post->image_url
         $imageUrl ="";

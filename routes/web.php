@@ -43,6 +43,8 @@ Route::resource('/backend/blog','Backend\BlogController');
 
 Route::resource('/backend/categories','Backend\CategoriesController');
 
+Route::resource('/backend/users','Backend\UsersController');
+
 
 Route::put('/backend/blog/{blog}/restore',[
     'uses' => 'Backend\BlogController@restore',
@@ -54,4 +56,9 @@ Route::delete('/backend/blog/{blog}/force-destroy',[
     'uses' => 'Backend\BlogController@forceDestroy',
     'as' => 'blog.force-destroy',
 
+]);
+
+Route::get('/backend/users/{user}/confirm',[
+    'uses' => 'Backend\UsersController@confirm',
+    'as' => 'users.confirm'
 ]);

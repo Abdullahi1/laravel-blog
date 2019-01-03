@@ -24,6 +24,13 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
             [
+                'name' => "Super Admin",
+                'email'=>"superadmin@test.com",
+                'slug' => "super-admin",
+                'bio' => $faker->text(rand(250, 300)),
+                'password' => bcrypt('secret')
+            ],
+            [
                 'name' => "John Doe",
                 'email'=>"johndoe@test.com",
                 'slug' => "john-doe",
