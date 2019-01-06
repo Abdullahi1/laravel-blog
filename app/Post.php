@@ -109,6 +109,24 @@ use SoftDeletes;
         return $query->whereNull('published_at');
     }
 
+    public function scopeFilter($query, $term)
+    {
+        if ($term) {
+            $query->where(function ($q) use ($term) {
+
+                $q->whereHas('author',function ($qr) use ($term){
+                    $qr->where('name','LIKE',"%{$term}%");
+                });
+
+                $q->orWhereHas('category',function ($qr) use ($term){
+                    $qr->where('title','LIKE',"%{$term}%");
+                });
+
+                $q->orWhere('title', 'LIKE', "%{$term}%");
+                $q->orWhere('excerpt', 'LIKE', "%{$term}%");
+            });
+        }
+    }
 
     public function scopePopular($query){
         return $query->orderBy('view_count','asc');

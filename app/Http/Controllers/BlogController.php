@@ -21,8 +21,17 @@ class BlogController extends Controller
         //2.latest()
         $posts = Post::with('author')
             ->latest()
-            ->published()
-            ->paginate(3);
+            ->filter(\request('q'))
+            ->published();
+
+//        if ($term = \request('q')) {
+//
+//            $posts->where(function ($q) use ($term){
+//            $q->orWhere('title', 'LIKE', "%{$term}%");
+//            $q->orWhere('excerpt', 'LIKE', "%{$term}%");
+//        });
+//        }
+        $posts = $posts->paginate(3);
 
 
         return view('blog.index',compact('posts'));

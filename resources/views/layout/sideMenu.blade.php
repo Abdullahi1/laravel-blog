@@ -1,15 +1,18 @@
 <div class="col-md-4">
     <aside class="right-sidebar">
-        {{--<div class="search-widget">--}}
-            {{--<div class="input-group">--}}
-                {{--<input type="text" class="form-control input-lg" placeholder="Search for...">--}}
-                {{--<span class="input-group-btn">--}}
-                            {{--<button class="btn btn-lg btn-default" type="button">--}}
-                                {{--<i class="fa fa-search"></i>--}}
-                            {{--</button>--}}
-                          {{--</span>--}}
-            {{--</div><!-- /input-group -->--}}
-        {{--</div>--}}
+        <div class="search-widget">
+            <form action="{{ route('blog') }}">
+            <div class="input-group">
+                <input type="text" class="form-control input-lg" name="q" value="{{request('q')}}" placeholder="Search for...">
+                <span class="input-group-btn">
+                            <button class="btn btn-lg btn-default" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                          </span>
+            </div>
+            </form>
+                <!-- /input-group -->
+        </div>
 
         <div class="widget">
             <div class="widget-heading">
@@ -63,7 +66,7 @@
                         <div class="post-body">
                             <h6><a href="{{ route('blog.check',$popularPost->slug ) }}">{{$popularPost -> title}}</a></h6>
                             <div class="post-meta">
-                                <span>{{$post -> date}}</span>
+                                <span>{{$popularPost -> date}}</span>
                             </div>
                         </div>
                     </li>
