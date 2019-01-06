@@ -31,7 +31,7 @@
 
                             <p>
                                 {{ Auth::user()->name }}
-                                <small>Role</small>
+                                <small>{{Auth::user()->roles->first()->display_name}}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -52,7 +52,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{route('home.profile')}}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('logout') }}"

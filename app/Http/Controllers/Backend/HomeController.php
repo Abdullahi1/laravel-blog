@@ -24,6 +24,12 @@ class HomeController extends BackendController
      */
     public function index()
     {
-        return view('backend.home');
+        return view('backend.home.index');
+    }
+
+    public function profile(Request $request){
+        $user = $request->user();
+
+        return view('backend.home.profile', compact('user'));
     }
 }

@@ -62,3 +62,8 @@ Route::get('/backend/users/{user}/confirm',[
     'uses' => 'Backend\UsersController@confirm',
     'as' => 'users.confirm'
 ]);
+
+Route::get('/profile',[
+   'uses' => 'Backend\HomeController@profile',
+   'as' => 'home.profile'
+]);

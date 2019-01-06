@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -93,6 +94,10 @@ use SoftDeletes;
 
     public function scopePublished($query){
         return $query->where('published_at','<=',Carbon::now());
+    }
+
+    public function scopeOwn($query){
+        return $query->where('author_id',Auth::user()->id);
     }
 
     public function scopeScheduled($query){

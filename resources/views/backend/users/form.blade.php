@@ -30,6 +30,15 @@
             </div>
 
 
+            <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
+                {!! Form::label('role') !!}
+                {!! Form::select('role', App\Role::pluck('display_name', 'id'), $user->exists ? $user->roles->first()->id : null, ['class' => 'form-control','placeholder' =>'Select Role']) !!}
+
+                @if($errors->has('role'))
+                    <span class="help-block">{{ $errors->first('role') }}</span>
+                @endif
+            </div>
+
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                 {!! Form::label('password') !!}
                 {!! Form::password('password', ['class' => 'form-control']) !!}

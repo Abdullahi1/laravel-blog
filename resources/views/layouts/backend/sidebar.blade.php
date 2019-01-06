@@ -49,9 +49,13 @@
                 </ul>
             </li>
 
+            @role(['admin','editor'])
             <li><a href="{{ route('categories.index') }}"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
-
+            @endrole
+            @role(['admin'])
             <li><a href="{{ route('users.index') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
+            @endrole
+
         </ul>
     </section>
     <!-- /.sidebar -->

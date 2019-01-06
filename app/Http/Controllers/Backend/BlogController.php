@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\BackendController;
 use App\Http\Requests;
@@ -29,48 +30,99 @@ class BlogController extends BackendController
         //
         if (($status = $request->get('status')) && $status == 'trash'){
             //Use withTrashed or onlyTrashed
-            $posts = Post::onlyTrashed()
-                ->with('author', 'category')
-                ->latest()
-                ->where('author_id',Auth::id())
-                ->paginate(10);
-            $postCount = Post::count();
-            $onlyTrashed = TRUE;
+            if ($request->user() ->hasRole('admin') || $request->user()->hasRole('editor')){
+                $posts = Post::onlyTrashed()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = TRUE;
+            }else {
+                $posts = Post::onlyTrashed()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->where('author_id', Auth::id())
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = TRUE;
+            }
+        }elseif($status == 'own'){
+                $posts = Post::own()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
 
         }elseif($status == 'published'){
-            //Calling the published Scope
-            $posts = Post::published()
-                ->with('author', 'category')
-                ->latest()
-                ->where('author_id',Auth::id())
-                ->paginate(10);
-            $postCount = Post::count();
-            $onlyTrashed = FALSE;
 
+            if ($request->user()->hasRole('admin') || $request->user()->hasRole('editor')) {
+                $posts = Post::published()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            }else {
+                //Calling the published Scope
+                $posts = Post::published()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->where('author_id', Auth::id())
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            }
         }elseif($status == 'scheduled'){
-            $posts = Post::scheduled()
-                ->with('author', 'category')
-                ->latest()
-                ->where('author_id',Auth::id())
-                ->paginate(10);
-            $postCount = Post::count();
-            $onlyTrashed = FALSE;
+            if ($request->user()->hasRole('admin') || $request->user()->hasRole('editor')) {
 
+                $posts = Post::scheduled()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+
+            }else {
+                $posts = Post::scheduled()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->where('author_id', Auth::id())
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            }
         }elseif($status == 'draft'){
-            $posts = Post::draft()
-                ->with('author', 'category')
-                ->latest()
-                ->where('author_id',Auth::id())
-                ->paginate(10);
-            $postCount = Post::count();
-            $onlyTrashed = FALSE;
-
+            if ($request->user()->hasRole('admin') || $request->user()->hasRole('editor')) {
+                $posts = Post::draft()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            }else {
+                $posts = Post::draft()
+                    ->with('author', 'category')
+                    ->latest()
+                    ->where('author_id', Auth::id())
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            }
         }else {
-            $posts = Post::with('author', 'category')
-                ->latest()->where('author_id',Auth::id())
-                ->paginate(10);
-            $postCount = Post::count();
-            $onlyTrashed = FALSE;
+            if ($request->user()->hasRole('admin') || $request->user()->hasRole('editor')) {
+                $posts = Post::with('author', 'category')
+                    ->latest()
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            } else {
+                $posts = Post::with('author', 'category')
+                    ->latest()->where('author_id', Auth::id())
+                    ->paginate(10);
+                $postCount = Post::count();
+                $onlyTrashed = FALSE;
+            }
         }
 
 //        $posts = Post::with('author', 'category')->latest()->paginate(10);
@@ -83,16 +135,26 @@ class BlogController extends BackendController
     //Returns the number of post for each sections
     protected function statusListCount()
     {
-        return [
-          'all' => Post::where('author_id',Auth::id())->count(),
-            'published' => Post::where('author_id',Auth::id())->published()->count(),
-            'scheduled' => Post::where('author_id',Auth::id())->scheduled()->count(),
-            'draft' => Post::where('author_id',Auth::id())->draft()->count(),
-            'trash' => Post::where('author_id',Auth::id())->onlyTrashed()->count(),
-        ];
+        if (User::find(Auth::id())->hasRole('admin') || User::find(Auth::id())->hasRole('editor')) {
+            return [
+                'all' => Post::count(),
+                'own' => Post::own()->count(),
+                'published' => Post::published()->count(),
+                'scheduled' => Post::scheduled()->count(),
+                'draft' => Post::draft()->count(),
+                'trash' => Post::onlyTrashed()->count(),
+            ];
+        } else {
+            return [
+                'all' => Post::where('author_id', Auth::id())->count(),
+                'published' => Post::where('author_id', Auth::id())->published()->count(),
+                'scheduled' => Post::where('author_id', Auth::id())->scheduled()->count(),
+                'draft' => Post::where('author_id', Auth::id())->draft()->count(),
+                'trash' => Post::where('author_id', Auth::id())->onlyTrashed()->count(),
+            ];
+        }
+
     }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -159,7 +221,11 @@ class BlogController extends BackendController
     //Post $blog
     public function edit($id)
     {
-        $post = Post::where('author_id',Auth::id())->findOrFail($id);
+        if (User::find(Auth::id())->hasRole('admin') || User::find(Auth::id())->hasRole('editor')) {
+            $post = Post::findOrFail($id);
+        }else {
+            $post = Post::where('author_id', Auth::id())->findOrFail($id);
+        }
         return view('backend.blog.edit',compact('post'));
 
     }
