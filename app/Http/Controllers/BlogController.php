@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Category;
+use App\Tag;
 use App\User;
 use function foo\func;
 use Illuminate\Support\Facades\DB;
@@ -86,4 +87,19 @@ class BlogController extends Controller
 
 
         return view('blog.index',compact('posts','authorName'));    }
+
+        public function tag(Tag $tag){
+            $tagName = $tag -> name;
+
+            $posts = $tag
+                ->post()
+                ->with('author')
+                ->latestFirst()
+                ->published()
+                ->paginate(3);
+
+
+            return view('blog.index',compact('posts','tagName'));
+        }
 }
+

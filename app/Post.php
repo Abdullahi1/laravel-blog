@@ -131,4 +131,18 @@ use SoftDeletes;
     public function scopePopular($query){
         return $query->orderBy('view_count','asc');
     }
+
+
+    public function tags(){
+      return  $this->belongsToMany(Tag::class);
+    }
+
+    public function getTagsHtmlAttribute()
+    {
+        $anchors = [];
+        foreach($this->tags as $tag) {
+            $anchors[] = '<a href="' . route('tag', $tag->slug) . '">' . $tag->name . '</a>';
+        }
+        return implode(", ", $anchors);
+    }
 }
