@@ -145,4 +145,14 @@ use SoftDeletes;
         }
         return implode(", ", $anchors);
     }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function commentNumber(){
+        $commentNumber =  $this->comments->count();
+
+        return $commentNumber . " ". str_plural('Comment',$commentNumber);
+    }
 }
